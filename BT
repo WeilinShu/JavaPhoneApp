@@ -1,0 +1,29 @@
+<uses-permission android:name = "android.permission.BLUETOOTH"/>                    //phone permission
+<uses-permission android:name = "andriod.permission.BLUETOOTH_ADMIN"/>
+
+BluetoothAdapter myBuletoothAdapter = BluetoothAdapter.getDefaultAdapter();
+if(mBluetoothAdapter == null){
+    //This means the phone does not support bluetooth
+    return;
+}
+if(!myBluetoothAdapter.isEnabled()){
+    //If BT is off, turn on BT
+    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+    
+public void onActivityResult(int requestCode, int resultCode, Intent data){
+    if(requestCode == REQUEST_ENABLE_BT){
+        if(requestCode == RESULT_OK){
+            //BT is now activated 
+        }
+    }
+}
+
+//should let the phone be discovered by microcontroller in 200 seconds
+private void ensureDiscoverable() {
+    if(myBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+        Intent  discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DRATION, 200);
+        startActivity(discoverableIntent);
+    }
+}
